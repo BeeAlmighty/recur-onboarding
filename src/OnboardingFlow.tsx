@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"; // Add this import
 import { StepOne } from "./components/StepOne";
 import { StepTwo } from "./components/StepTwo";
 import { SuccessMessage } from "./components/SuccessMessage";
-import { Crown, Star, Gift, Ticket, Lock } from "lucide-react"; // Added Ticket & Lock
+import { Crown, Star, Ticket, Lock } from "lucide-react"; // Added Ticket & Lock
 import { AppFooter } from "./components/AppFooter";
 
 // Explicit type-only import for 2026 TS standards
