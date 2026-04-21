@@ -88,15 +88,15 @@ export const StepTwo = ({ phone, onComplete }: StepTwoProps) => {
           className={`py-7 px-8 text-lg rounded-[2.2rem] transition-all duration-500 ${
             error?.type === "VALIDATION" && !name
               ? "border-red-500/40 bg-red-500/5 shadow-[0_0_40px_rgba(239,68,68,0.1)]"
-              : "border-white/5 bg-[#050505]/50 group-focus-within:border-[#D4AF37]/40 group-focus-within:bg-black group-focus-within:shadow-[0_0_50px_rgba(212,175,55,0.05)]"
+              : "border-white bg-[#050505] group-focus-within:border-[#D4AF37]/40 group-focus-within:bg-black group-focus-within:shadow-[0_0_50px_rgba(212,175,55,0.05)]"
           }`}
         />
       </div>
 
       {/* BIRTHDAY SELECTION: Squircle-themed Grid */}
       <div className="space-y-3 group">
-        <label className="text-[10px] font-black text-[#D4AF37]/60 ml-6 uppercase tracking-[0.4em] group-focus-within:text-[#D4AF37] transition-all">
-          Date of Birth
+        <label className="text-[10px] font-black text-[#D4AF37] ml-6 uppercase tracking-[0.4em] group-focus-within:text-[#D4AF37] transition-all">
+          Birth month and day
         </label>
         <div className="grid grid-cols-2 gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-[2.2rem] border border-white/10 group-focus-within:border-[#D4AF37]/20 transition-all">
           <select
@@ -142,7 +142,7 @@ export const StepTwo = ({ phone, onComplete }: StepTwoProps) => {
             min="1"
             max="31"
             required
-            className="w-full px-6 py-5 bg-[#0A0A0A] rounded-[1.6rem] text-white font-bold text-base outline-none border border-white/5 placeholder:text-white/10"
+            className="w-full px-6 py-5 bg-[#0A0A0A] rounded-[1.6rem] text-white font-bold text-base outline-none border border-white/5 placeholder:text-white"
             value={dobDay}
             onChange={(e) => {
               if (error) setError(null);
@@ -165,7 +165,7 @@ export const StepTwo = ({ phone, onComplete }: StepTwoProps) => {
       >
         <div
           className={`flex items-center justify-center w-14 h-14 rounded-full transition-all duration-500 
-          ${error?.type === "VALIDATION" && !consent ? "bg-red-500 text-white" : consent ? "bg-[#D4AF37] text-black shadow-[0_0_25px_rgba(212,175,55,0.4)]" : "bg-white/10"}
+          ${error?.type === "VALIDATION" && !consent ? "bg-red-500 text-white" : consent ? "bg-[#D4AF37] text-black shadow-[0_0_25px_rgba(212,175,55,0.4)]" : "bg-white/40"}
         `}
         >
           {error?.type === "VALIDATION" && !consent ? (
@@ -180,12 +180,12 @@ export const StepTwo = ({ phone, onComplete }: StepTwoProps) => {
         </div>
         <div className="flex-1">
           <p
-            className={`text-[13px] font-black uppercase tracking-widest ${error?.type === "VALIDATION" && !consent ? "text-red-400" : consent ? "text-white" : "text-white/40"}`}
+            className={`text-[13px] font-black uppercase tracking-widest ${error?.type === "VALIDATION" && !consent ? "text-red-400" : consent ? "text-white" : "text-white"}`}
           >
             Elite Club Terms
           </p>
           <p
-            className={`text-[11px] font-medium leading-relaxed mt-1 ${error?.type === "VALIDATION" && !consent ? "text-red-400/60" : "text-white/20"}`}
+            className={`text-[11px] font-medium leading-relaxed mt-1 ${error?.type === "VALIDATION" && !consent ? "text-red-400/60" : "text-white/60"}`}
           >
             I agree to receive VIP invites & gifts.
           </p>
@@ -221,9 +221,9 @@ export const StepTwo = ({ phone, onComplete }: StepTwoProps) => {
           type="submit"
           className={`w-full py-8 transition-all duration-700 rounded-[2.2rem] active:scale-[0.98] ${
             error?.type === "CONNECTION"
-              ? "opacity-40 grayscale pointer-events-none"
+              ? "opacity-80 grayscale pointer-events-none"
               : !consent
-                ? "opacity-30 grayscale"
+                ? "opacity-80 grayscale"
                 : ""
           }`}
         >

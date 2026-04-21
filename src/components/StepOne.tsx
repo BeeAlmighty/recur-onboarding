@@ -66,22 +66,22 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
     >
       <div className="space-y-3 group text-center">
         <label
-          className={`text-[10px] font-black uppercase tracking-[0.4em] transition-colors duration-300 ${
+          className={`text-[14px] font-black uppercase tracking-[0.4em] transition-colors duration-300 ${
             error
               ? "text-red-500"
-              : "text-white/20 group-focus-within:text-[#D4AF37]"
+              : "text-white group-focus-within:text-[#D4AF37]"
           }`}
         >
           {error?.type === "CONNECTION"
             ? "Registry Link Offline"
-            : "Member Identification"}
+            : "WhatsApp Number"}
         </label>
 
         <div
           className={`flex gap-3 p-2 bg-white/5 backdrop-blur-2xl rounded-[1.5rem] border transition-all duration-500 ${
             error
               ? "border-red-500/30 bg-red-500/5 shadow-[0_0_40px_rgba(239,68,68,0.1)]"
-              : "border-white/10 group-focus-within:border-[#D4AF37]/30 shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
+              : "border-white group-focus-within:border-[#D4AF37]/30 shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
           }`}
         >
           <div className="flex items-center justify-center px-6 bg-[#050505] border border-white/5 rounded-xl text-[#D4AF37] font-black text-sm tracking-widest shadow-inner">

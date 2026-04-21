@@ -7,7 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const Input = ({ label, ...props }: InputProps) => {
   return (
     <div className="group space-y-2 w-full animate-in fade-in duration-700">
-      <label className="text-[10px] font-black text-[#D4AF37]/60 ml-1 uppercase tracking-[0.2em] transition-all group-focus-within:text-[#D4AF37] group-focus-within:translate-x-1">
+      <label className="text-[10px] font-black text-[#D4AF37] ml-1 uppercase tracking-[0.2em] transition-all group-focus-within:text-[#D4AF37] group-focus-within:translate-x-1">
         {label}
       </label>
       <div className="relative w-full">
@@ -17,7 +17,7 @@ export const Input = ({ label, ...props }: InputProps) => {
             bg-[#121212] border border-white/10
             rounded-2xl 
             text-white font-bold text-lg
-            placeholder:text-white/10
+            placeholder:text-white
             outline-none transition-all duration-500
             focus:border-[#D4AF37]/40 
             focus:ring-[12px] focus:ring-[#D4AF37]/5 

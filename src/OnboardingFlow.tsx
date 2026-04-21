@@ -56,7 +56,7 @@ export default function OnboardingFlow() {
           <h1 className="text-5xl font-black tracking-tighter text-white mb-3 uppercase">
             RECUR<span className="text-[#D4AF37]">.</span>
           </h1>
-          <p className="text-white/40 max-w-[280px] mx-auto leading-relaxed text-[13px] uppercase tracking-[0.25em] font-medium">
+          <p className="text-white max-w-[280px] mx-auto leading-relaxed text-[13px] uppercase tracking-[0.25em] font-medium">
             The Elite Guest Lounge,
             <span className="text-[#D4AF37] block mt-1 font-black italic">
               Experience Remastered.
