@@ -35,7 +35,7 @@ export default function OnboardingFlow() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080808] text-white font-sans selection:bg-[#D4AF37]/30 flex flex-col">
+    <div className="min-h-[100dvh] bg-[#080808] text-white font-sans selection:bg-[#D4AF37]/30 flex flex-col">
       {/* Background Ambient Glow */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-[10%] -left-[20%] w-[70%] h-[50%] bg-[#D4AF37]/10 blur-[120px] rounded-full" />
