@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom"; // Import standard Routes/Rout
 import { LoyaltyTerminal } from "./pages/LoyaltyTerminal";
 import OnboardingFlow from "./OnboardingFlow.tsx";
 import { RedemptionTerminal } from "./pages/RedemptionTerminal.tsx";
+import { StaffPortal } from "./pages/StaffPortal.tsx";
 
 export default function App() {
   return (
@@ -21,6 +22,10 @@ export default function App() {
       <Route
         path="/voucher"
         element={<RedemptionTerminal />}
+      />
+      <Route
+        path="/staff"
+        element={<StaffPortal />}
       />
     </Routes>
   );

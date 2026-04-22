@@ -1,5 +1,4 @@
 // src/api/client.ts
-
 const N8N_BASE_URL = "https://n8n.geotech.agency/webhook";
 
 export interface CheckResponse {
@@ -28,7 +27,9 @@ export const recurClient = {
       });
 
       if (!response.ok) throw new Error("Network response was not ok");
-      return await response.json();
+      const data = await response.json();
+      return { ...data, success: true };
+      // return await response.json();
     } catch (error) {
       console.error("API Error (checkCustomer):", error);
       throw error;

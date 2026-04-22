@@ -1,41 +1,37 @@
 import React, { useState, useCallback } from "react";
-import { Trophy, AlertCircle, WifiOff } from "lucide-react";
+import { Trophy, AlertCircle, Fingerprint, ChevronRight } from "lucide-react";
 import { Button } from "./ui/Button";
 import { recurClient } from "../api/client";
-import type { LoyaltyCheckResponse } from "../types"; // Using the types from your index.ts
+import type { LoyaltyCheckResponse } from "../types";
 
 interface StepOneProps {
   onRegistered: (data: LoyaltyCheckResponse) => void;
   onNotRegistered: (phone: string) => void;
 }
 
-type ErrorState = {
-  type: "VALIDATION" | "CONNECTION";
-  message: string;
-};
-
 export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
   const [inputNumber, setInputNumber] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<ErrorState | null>(null);
+  const [error, setError] = useState<{ type: string; message: string } | null>(
+    null,
+  );
   const [shake, setShake] = useState(false);
 
-  const triggerError = useCallback(
-    (type: "VALIDATION" | "CONNECTION", message: string) => {
-      setError({ type, message });
-      setShake(true);
-      // 2026 UX: Brief shake duration to maintain "snappiness"
-      setTimeout(() => setShake(false), 500);
-    },
-    [],
-  );
+  const triggerError = useCallback((type: string, message: string) => {
+    setError({ type, message });
+    setShake(true);
+    setTimeout(() => setShake(false), 500);
+  }, []);
 
   const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. Validation Logic
-    if (!inputNumber || inputNumber.length < 7) {
-      triggerError("VALIDATION", "Valid WhatsApp number required.");
+    // Basic validation for Nigerian numbers (typically 10-11 digits)
+    if (!inputNumber || inputNumber.length < 10) {
+      triggerError(
+        "VALIDATION",
+        "Please enter a valid phone number to continue.",
+      );
       return;
     }
 
@@ -44,7 +40,6 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
 
     try {
       const data = await recurClient.checkCustomer(inputNumber);
-
       if (data.exists) {
         onRegistered(data);
       } else {
@@ -52,8 +47,7 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
         onNotRegistered(finalNumber);
       }
     } catch (err) {
-      // 2. Rebranded Connection Error (n8n unreachable)
-      triggerError("CONNECTION", "Secure link interrupted. Try again.");
+      triggerError("CONNECTION", "Secure registry link interrupted.");
     } finally {
       setLoading(false);
     }
@@ -62,68 +56,52 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
   return (
     <form
       onSubmit={handleCheck}
-      className={`space-y-8 transition-all duration-500 ${shake ? "animate-shake" : ""}`}
+      className={`space-y-8 transition-all duration-300 ${shake ? "animate-shake" : ""}`}
     >
-      <div className="space-y-3 group text-center">
-        <label
-          className={`text-[14px] font-black uppercase tracking-[0.4em] transition-colors duration-300 ${
-            error
-              ? "text-red-500"
-              : "text-white group-focus-within:text-[#D4AF37]"
-          }`}
-        >
-          {error?.type === "CONNECTION"
-            ? "Registry Link Offline"
-            : "WhatsApp Number"}
-        </label>
+      <div className="space-y-6 text-center">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40">
+            <Fingerprint
+              size={12}
+              className="text-[#D4AF37]"
+            />
+            <span className="text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.2em]">
+              Identity Verification
+            </span>
+          </div>
+          <h3 className="text-white font-black text-2xl tracking-tight">
+            Unlock Digital Menu
+          </h3>
+          <p className="text-white/80 text-sm font-medium px-6 leading-relaxed">
+            Please enter your registered WhatsApp number to access our selection
+            and current offers.
+          </p>
+        </div>
 
+        {/* Input Container with Focus Transitions */}
         <div
-          className={`flex gap-3 p-2 bg-white/5 backdrop-blur-2xl rounded-[1.5rem] border transition-all duration-500 ${
+          className={`group flex gap-3 p-2 bg-white/10 rounded-[2.2rem] border transition-all duration-500 ease-out ${
             error
-              ? "border-red-500/30 bg-red-500/5 shadow-[0_0_40px_rgba(239,68,68,0.1)]"
-              : "border-white group-focus-within:border-[#D4AF37]/30 shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
+              ? "border-red-500 bg-red-500/10 shadow-[0_0_20px_rgba(239,68,68,0.2)]"
+              : "border-white/20 focus-within:border-[#D4AF37] focus-within:bg-[#D4AF37]/5 focus-within:shadow-[0_0_30px_rgba(212,175,55,0.15)] focus-within:scale-[1.02]"
           }`}
         >
-          <div className="flex items-center justify-center px-6 bg-[#050505] border border-white/5 rounded-xl text-[#D4AF37] font-black text-sm tracking-widest shadow-inner">
+          <div className="flex items-center justify-center px-6 bg-[#181818] border border-white/20 rounded-2xl text-[#D4AF37] font-black text-sm tracking-widest transition-colors group-focus-within:border-[#D4AF37]/40">
             +234
           </div>
           <input
             type="tel"
             placeholder="812 345 6789"
             disabled={loading}
-            className="flex-1 px-4 py-5 bg-transparent text-white font-bold text-xl outline-none placeholder:text-white/5 disabled:opacity-30"
+            className="flex-1 px-2 py-5 bg-transparent text-white font-bold text-xl outline-none placeholder:text-white/60"
             value={inputNumber}
             onChange={(e) => {
               if (error) setError(null);
+              // Sanitize input to only allow digits
               setInputNumber(e.target.value.replace(/\D/g, ""));
             }}
           />
         </div>
-      </div>
-
-      {/* LAYOUT FIX: Error Toast 
-          The wrapper has a fixed height (h-4) and absolute positioning 
-          to ensure it never pushes the button or overlaps the text.
-      */}
-      <div className="relative h-4 flex items-center justify-center">
-        {error && (
-          <div className="absolute -top-4 flex items-center gap-2 text-red-400 animate-in fade-in slide-in-from-top-2 duration-300 bg-red-500/10 py-1.5 px-5 rounded-full border border-red-500/20 backdrop-blur-md">
-            {error.type === "CONNECTION" ? (
-              <WifiOff
-                size={12}
-                strokeWidth={3}
-              />
-            ) : (
-              <AlertCircle
-                size={12}
-                strokeWidth={3}
-              />
-            )}
-            <span className="text-[9px] font-black uppercase tracking-[0.2em] whitespace-nowrap">
-              {error.message}
-            </span>
-          </div>
-        )}
       </div>
 
       <div className="space-y-4">
@@ -131,26 +109,32 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
           isLoading={loading}
           variant="gold"
           type="submit"
-          className={`py-7 text-base shadow-2xl transition-all active:scale-[0.97] ${
-            error?.type === "CONNECTION"
-              ? "opacity-40 grayscale pointer-events-none"
-              : "hover:shadow-[#D4AF37]/10"
-          }`}
+          className="py-7 rounded-[1.8rem] group"
         >
-          <Trophy
-            size={18}
-            strokeWidth={3}
-            className="mr-2"
-          />
-          <span className="tracking-[0.2em] uppercase font-black">
-            {loading ? "Syncing..." : "Claim Gift"}
-          </span>
+          {loading ? (
+            <span>Authenticating...</span>
+          ) : (
+            <>
+              <Trophy
+                size={18}
+                strokeWidth={3}
+                className="group-hover:rotate-12 transition-transform"
+              />
+              <span className="tracking-widest uppercase">
+                View Menu & Rewards
+              </span>
+              <ChevronRight size={18} />
+            </>
+          )}
         </Button>
 
-        {error?.type === "CONNECTION" && (
-          <p className="text-center text-[9px] text-white/20 font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-2 duration-1000">
-            Internal network delay. Please re-attempt in a moment.
-          </p>
+        {error && (
+          <div className="flex items-center justify-center gap-2 text-red-400 animate-in fade-in slide-in-from-bottom-2">
+            <AlertCircle size={14} />
+            <span className="text-[11px] font-black uppercase tracking-widest">
+              {error.message}
+            </span>
+          </div>
         )}
       </div>
     </form>
