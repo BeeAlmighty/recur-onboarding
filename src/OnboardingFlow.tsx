@@ -32,7 +32,7 @@ export default function OnboardingFlow() {
       window.location.href =
         // "https://drive.google.com/file/d/1gXVpco1RFQCdQrHMJ0iPwHVrPs7U9PBa/view";
         "https://qr1.me-qr.com/link-list/zuokc0h5/show";
-    }, 8000);
+    }, 3000);
   };
 
   return (
