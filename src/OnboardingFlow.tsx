@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StepOne } from "./components/StepOne";
 import { StepTwo } from "./components/StepTwo";
 import { SuccessMessage } from "./components/SuccessMessage";
-import { Crown } from "lucide-react";
+import { ChevronRight, Crown } from "lucide-react";
 import { AppFooter } from "./components/AppFooter";
 
 type AppView = "CHECK" | "REGISTER" | "ALREADY_IN";
@@ -30,12 +30,13 @@ export default function OnboardingFlow() {
     // Auto-redirect to menu after 8 seconds
     setTimeout(() => {
       window.location.href =
-        "https://drive.google.com/file/d/1gXVpco1RFQCdQrHMJ0iPwHVrPs7U9PBa/view";
+        // "https://drive.google.com/file/d/1gXVpco1RFQCdQrHMJ0iPwHVrPs7U9PBa/view";
+        "https://qr1.me-qr.com/link-list/zuokc0h5/show";
     }, 8000);
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[#080808] text-white font-sans selection:bg-[#D4AF37]/30 flex flex-col">
+    <div className="min-h-[100dvh] bg-[#080808] overflow-x-hidden text-white font-sans selection:bg-[#D4AF37]/30 flex flex-col">
       {/* Background Ambient Glow */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-[10%] -left-[20%] w-[70%] h-[50%] bg-[#D4AF37]/10 blur-[120px] rounded-full" />
@@ -82,7 +83,27 @@ export default function OnboardingFlow() {
             )}
           </div>
         </main>
-
+        <div className="mt-8 pt-6 border-t border-white/5 text-center">
+          <button
+            type="button"
+            onClick={() =>
+              (window.location.href =
+                "https://qr1.me-qr.com/link-list/zuokc0h5/show")
+            }
+            className="group inline-flex items-center gap-2 text-white/40 hover:text-[#D4AF37] transition-all duration-300"
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.3em]">
+              Emergency Menu Access
+            </span>
+            <ChevronRight
+              size={12}
+              className="group-hover:translate-x-1 transition-transform"
+            />
+          </button>
+          <p className="text-[9px] text-white/20 mt-2 italic font-medium">
+            *Rewards and loyalty tracking will be disabled in guest mode
+          </p>
+        </div>
         <AppFooter />
       </div>
     </div>

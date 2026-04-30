@@ -64,7 +64,7 @@ export const StepTwo = ({ phone, onComplete }: StepTwoProps) => {
       <Input
         label="Full Name"
         helperText="As you'd like it to appear on your digital invites."
-        placeholder="e.g. Moses Olusegun"
+        placeholder="e.g. Moses Maduakonam"
         value={name}
         onChange={(e) => setName(e.target.value)}
         className="rounded-[2.2rem]"
