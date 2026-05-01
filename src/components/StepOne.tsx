@@ -30,7 +30,6 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
   );
   const [shake, setShake] = useState(false);
 
-  // Memoized filter for performance during searches
   const filteredCountries = useMemo(
     () =>
       COUNTRIES.filter(
@@ -71,34 +70,34 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-full overflow-x-hidden">
       <form
         onSubmit={handleCheck}
-        className={`space-y-8 transition-all duration-300 ${shake ? "animate-shake" : ""}`}
+        className={`space-y-6 sm:space-y-8 transition-all duration-300 ${shake ? "animate-shake" : ""}`}
       >
         {/* Header Section */}
-        <div className="space-y-6 text-center">
+        <div className="space-y-4 sm:space-y-6 text-center">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40">
+            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40">
               <Fingerprint
-                size={12}
+                size={10}
                 className="text-[#D4AF37]"
               />
-              <span className="text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.2em]">
+              <span className="text-[9px] sm:text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.2em]">
                 Identity Verification
               </span>
             </div>
-            <h3 className="text-white font-black text-2xl tracking-tight">
+            <h3 className="text-white font-black text-xl sm:text-2xl tracking-tight">
               Unlock Digital Menu
             </h3>
-            <p className="text-white/80 text-sm font-medium px-6 leading-relaxed">
+            <p className="text-white/80 text-xs sm:text-sm font-medium px-4 sm:px-6 leading-relaxed">
               Please enter your registered WhatsApp number to access our Menu.
             </p>
           </div>
 
-          {/* Input Group */}
+          {/* Input Group - Adjusted for smaller screens */}
           <div
-            className={`group flex gap-2 p-1.5 bg-white/10 rounded-[2.2rem] border transition-all duration-500 ease-out ${
+            className={`group flex gap-1 sm:gap-2 p-1 sm:p-1.5 bg-white/10 rounded-[2rem] sm:rounded-[2.2rem] border transition-all duration-500 ease-out ${
               error
                 ? "border-red-500 bg-red-500/10 shadow-[0_0_20px_rgba(239,68,68,0.2)]"
                 : "border-white/20 focus-within:border-[#D4AF37] focus-within:bg-[#D4AF37]/5"
@@ -107,10 +106,12 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
             <button
               type="button"
               onClick={() => setIsPickerOpen(true)}
-              className="flex items-center gap-2 px-5 bg-black/90 border border-white/10 rounded-[1.6rem] hover:bg-white/5 transition-all"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 bg-black/90 border border-white/10 rounded-[1.5rem] sm:rounded-[1.6rem] hover:bg-white/5 transition-all flex-shrink-0"
             >
-              <span className="text-base">{selectedCountry.flag}</span>
-              <span className="text-[#D4AF37] font-black text-xs tracking-widest">
+              <span className="text-sm sm:text-base">
+                {selectedCountry.flag}
+              </span>
+              <span className="text-[#D4AF37] font-black text-[10px] sm:text-xs tracking-widest">
                 {selectedCountry.code}
               </span>
             </button>
@@ -119,7 +120,7 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
               type="tel"
               placeholder="Phone Number"
               disabled={loading}
-              className="flex-1 px-3 py-5 bg-transparent text-white font-bold text-xl outline-none placeholder:text-white/20"
+              className="flex-1 min-w-0 px-2 sm:px-3 py-4 sm:py-5 bg-transparent text-white font-bold text-base sm:text-xl outline-none placeholder:text-white/20"
               value={inputNumber}
               onChange={(e) => {
                 if (error) setError(null);
@@ -130,32 +131,34 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
         </div>
 
         {/* Action Section */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <Button
             isLoading={loading}
             variant="gold"
             type="submit"
-            className="py-7 rounded-[1.8rem] group"
+            className="py-5 sm:py-7 rounded-[1.5rem] sm:rounded-[1.8rem] group w-full"
           >
             {loading ? (
-              <span>Authenticating...</span>
+              <span className="text-xs sm:text-sm">Authenticating...</span>
             ) : (
-              <>
+              <div className="flex items-center justify-center gap-2 sm:gap-3">
                 <Trophy
-                  size={18}
+                  size={16}
                   strokeWidth={3}
                   className="group-hover:rotate-12 transition-transform"
                 />
-                <span className="tracking-widest uppercase">View Menu</span>
-                <ChevronRight size={18} />
-              </>
+                <span className="tracking-widest uppercase font-black text-[10px] sm:text-sm">
+                  View Menu
+                </span>
+                <ChevronRight size={16} />
+              </div>
             )}
           </Button>
 
           {error && (
             <div className="flex items-center justify-center gap-2 text-red-400 animate-in fade-in slide-in-from-bottom-2">
-              <AlertCircle size={14} />
-              <span className="text-[11px] font-black uppercase tracking-widest">
+              <AlertCircle size={12} />
+              <span className="text-[10px] font-black uppercase tracking-widest text-center">
                 {error.message}
               </span>
             </div>
@@ -165,16 +168,16 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
 
       {/* Country Picker Modal */}
       {isPickerOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-[380px] bg-[#111] border border-white/10 rounded-[2.5rem] flex flex-col max-h-[75vh]">
-            <div className="p-6 border-b border-white/5 space-y-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md">
+          <div className="w-full max-w-[380px] bg-[#111] border border-white/10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col max-h-[80vh]">
+            <div className="p-5 sm:p-6 border-b border-white/5 space-y-4">
               <div className="flex items-center justify-between">
-                <h4 className="text-white font-black text-xs uppercase tracking-widest">
+                <h4 className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest">
                   Select Country
                 </h4>
                 <button
                   onClick={() => setIsPickerOpen(false)}
-                  className="text-white/40 hover:text-white"
+                  className="text-white/40 hover:text-white p-1"
                 >
                   <X size={20} />
                 </button>
@@ -182,19 +185,19 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
               <div className="relative">
                 <Search
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20"
-                  size={16}
+                  size={14}
                 />
                 <input
                   autoFocus
                   placeholder="Search name or code..."
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-sm text-white outline-none"
+                  className="w-full bg-white/5 border border-white/5 rounded-xl sm:rounded-2xl py-3 sm:py-4 pl-10 sm:pl-12 pr-4 text-sm text-white outline-none"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-3 no-scrollbar">
+            <div className="flex-1 overflow-y-auto p-2 sm:p-3 no-scrollbar">
               {filteredCountries.map((c) => (
                 <button
                   key={`${c.code}-${c.name}`}
@@ -203,15 +206,15 @@ export const StepOne = ({ onRegistered, onNotRegistered }: StepOneProps) => {
                     setIsPickerOpen(false);
                     setSearchTerm("");
                   }}
-                  className="w-full flex items-center justify-between p-4 hover:bg-[#D4AF37]/10 rounded-[1.5rem] transition-colors group"
+                  className="w-full flex items-center justify-between p-3 sm:p-4 hover:bg-[#D4AF37]/10 rounded-xl sm:rounded-[1.5rem] transition-colors group"
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="text-2xl">{c.flag}</span>
-                    <span className="text-sm font-bold text-white/70 group-hover:text-white">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <span className="text-xl sm:text-2xl">{c.flag}</span>
+                    <span className="text-xs sm:text-sm font-bold text-white/70 group-hover:text-white">
                       {c.name}
                     </span>
                   </div>
-                  <span className="text-xs font-black text-[#D4AF37]">
+                  <span className="text-[10px] sm:text-xs font-black text-[#D4AF37]">
                     {c.code}
                   </span>
                 </button>
